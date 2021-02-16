@@ -1,17 +1,13 @@
-<script id="jquery-warehouse">
+<script id="jquery-index">
     $(document).ready(function() {
-        $('#jquery-warehouse').remove();
+        $('#jquery-index').remove();
         const base_url = '<?php echo base_url() ?>';
-        const warehousetemplate = $('#warehouse-template').html();
-        const warehousetbody = $('.warehouse-tbody').html();
-        const warehouseformtemplate = $('#warehouse-form-template').html();
-        const warehousestoktemplate = $('#warehouse-stok-template').html();
-        const warehousedetailtemplate = $('#warehouse-detail-template').html();
-        const warehousedetailtbody = $('.warehouse-detail-tbody').html();
-        const warehousestokopnametemplate = $('#warehouse-stokopname-template').html();
-        const warehousestokopnametbody = $('.warehouse-stokopname-tbody').html();
-        const warehousedeletetemplate = $('#warehouse-delete-template').html();
-        const warehousestyletemplate = $('#style').html();
+        const penduduktemplate = $('#penduduk-template').html();
+        const penduduktbody = $('.penduduk-tbody').html();
+        const pendudukformtemplate = $('#penduduk-form-template').html();
+        const pendudukdetailtemplate = $('#penduduk-detail-template').html();
+        const pendudukdetailtbody = $('.penduduk-detail-tbody').html();
+        const pendudukdeletetemplate = $('#penduduk-delete-template').html();
 
         // SWEETALERT2
         const Toast = Swal.mixin({
@@ -24,101 +20,62 @@
         load_page();
 
         function load_page() {
-            app_config();
             add_command();
             cancle_command();
             loader();
-            warehouse_list();
-            add_edit_warehouse();
-        }
-
-        function app_config() {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('Admin/get_aplikasi') ?>",
-                dataType: "JSON",
-                success: function(data) {
-                    $('title').html(data.title);
-                    $('.sidebar-brand-text').html(data.icon_caption);
-                    $('.copyright').html('<span>' + data.footer + '</span>');
-                }
-            });
-            return false;
+            penduduk_list();
+            //add_edit_warehouse();
         }
 
         function add_command() {
-            $('#add-warehouse').click(function(e) {
+            $('#add-penduduk').click(function() {
                 form_create();
-                dropdown_satuan(e);
-
-                $('#harga-beli,#harga-jual,#stok').on('change', function() {
-                    old_stok = parseInt(0);
-                    old_buy = parseInt(0);
-                    stok = parseInt($('#stok').val());
-                    stok_off = stok - old_stok;
-                    bp = parseInt($('#harga-beli').val());
-                    sp = parseInt($('#harga-jual').val());
-
-                    if (old_buy == bp) {
-                        est_buy = (bp * stok_off).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                        est_profit = ((sp * stok_off) - (bp * stok_off)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                    } else {
-                        est_buy = (bp * stok_off).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                        est_profit = (((old_buy * old_stok) + (sp * stok_off)) - ((old_buy * old_stok) + (bp * stok_off))).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                    }
-                    stok_off >= 0 ? $('#est-stock').html('+' + stok_off) : $('#est-stock').html(stok_off);
-                    $('#est-buy').html('Rp. ' + est_buy + ',-');
-                    $('#est-profit').html('Rp. ' + est_profit + ',-');
-                });
             });
         }
 
         function cancle_command() {
-            $('#cancle-warehouse').click(function() {
-                $('#warehouse-form').html(null);
-                $('#warehouse-detail').html(null);
-                $('#warehouse-delete').html(null);
-                $('#warehouse-list').slideDown();
-                $('#cancle-warehouse').fadeOut().removeClass('d-inline-block');
-                $('#add-warehouse').addClass('d-inline-block').fadeIn();
+            $('#cancle-penduduk').click(function() {
+                $('#penduduk-form').html(null);
+                $('#penduduk-detail').html(null);
+                $('#penduduk-delete').html(null);
+                $('#penduduk-list').slideDown();
+                $('#cancle-penduduk').fadeOut().removeClass('d-inline-block');
+                $('#add-penduduk').addClass('d-inline-block').fadeIn();
             });
         }
 
         function form_create() {
-            var html = warehouseformtemplate;
+            var html = pendudukformtemplate;
 
-            $('#warehouse-form').html(html);
-            $('#warehouse-list').slideUp();
-            $('#add-warehouse').fadeOut().removeClass('d-inline-block');
-            $('#cancle-warehouse').addClass('d-inline-block').fadeIn();
-
-            $('#est-stock').html('0');
-            $('#est-buy').html('Rp. 0,-');
+            $('#penduduk-form').html(html);
+            $('#penduduk-list').slideUp();
+            $('#add-penduduk').fadeOut().removeClass('d-inline-block');
+            $('#cancle-penduduk').addClass('d-inline-block').fadeIn();
         }
 
         function detail_create() {
-            var html = warehousedetailtemplate;
+            var html = pendudukdetailtemplate;
 
-            $('#warehouse-detail').html(html);
-            $('#warehouse-list').slideUp();
-            $('#add-warehouse').fadeOut().removeClass('d-inline-block');
-            $('#cancle-warehouse').addClass('d-inline-block').fadeIn();
+            $('#penduduk-detail').html(html);
+            $('#penduduk-list').slideUp();
+            $('#add-penduduk').fadeOut().removeClass('d-inline-block');
+            $('#cancle-penduduk').addClass('d-inline-block').fadeIn();
         }
 
         function loader() {
-            $('#warehouse-loader').html('<center><div class="spinner-border text-primary mb-4" role="status"><span class="sr-only">Loading...</span></div></center>').show();
+            $('#penduduk-loader').html('<center><div class="spinner-border text-primary mb-4" role="status"><span class="sr-only">Loading...</span></div></center>').show();
             $('.form-submit').prop('disabled', true);
             $('.form-close').prop('disabled', true);
             $('.form-reset').prop('disabled', true);
         }
 
         function unloader() {
-            $('#warehouse-loader').hide();
+            $('#penduduk-loader').hide();
         }
 
-        function warehouse_list() {
-            $('#warehouse-list').html(warehousetemplate);
-            $('#warehouse-list > .warehouse-table').DataTable({
+        function penduduk_list() {
+            $('#penduduk-list').html(penduduktemplate);
+            $('#penduduk-list > .penduduk-table').DataTable({
                 "serverSide": true,
                 "paging": true,
                 "lengthChange": true,
@@ -128,14 +85,14 @@
                 "autoWidth": true,
                 "language": {
                     "emptyTable": "Data Kosong",
-                    "info": "Menampilkan _START_ - _END_ dari _TOTAL_ Barang Gudang",
-                    "infoEmpty": "Menampilkan 0 - 0 dari 0 Barang Gudang",
-                    "infoFiltered": "(Mencari dari _MAX_ Total Barang Gudang)",
-                    "lengthMenu": "Menampilkan _MENU_ Barang Gudang",
+                    "info": "Menampilkan _START_ - _END_ dari _TOTAL_ Penduduk",
+                    "infoEmpty": "Menampilkan 0 - 0 dari 0 Penduduk",
+                    "infoFiltered": "(Mencari dari _MAX_ Penduduk)",
+                    "lengthMenu": "Menampilkan _MENU_ Penduduk",
                     "loadingRecords": "Memuat...",
                     "processing": "Memproses...",
                     "search": "Cari:",
-                    "zeroRecords": "Tidak ada Barang Gudang yang cocok",
+                    "zeroRecords": "Tidak ada Penduduk yang cocok",
                     "paginate": {
                         "first": "Awal",
                         "last": "Akhir",
@@ -156,103 +113,37 @@
                     "className": "text-center align-middle",
                 }, {
                     "orderable": false,
-                    "targets": [0, 4]
+                    "targets": [0, 3]
                 }, {
                     "width": "40%",
-                    "targets": 1
+                    "targets": 2
                 }],
                 "ajax": {
-                    url: base_url + 'Admin/warehouse_datatables',
+                    url: base_url + 'Penduduk/penduduk_datatables',
                     type: 'POST',
                     dataType: 'JSON',
                     error: function() {
                         var html = '';
-                        var template = warehousetemplate;
-                        var el = warehousetbody;
+                        var template = penduduktemplate;
+                        var el = penduduktbody;
 
-                        $('#warehouse-list').html(template);
-                        $('.warehouse-tbody').html("<tr><td colspan='5'>Daftar Barang Gudang Masih Kosong</td></tr>");
+                        $('#penduduk-list').html(template);
+                        $('.penduduk-tbody').html("<tr><td colspan='4'>Daftar Penduduk Masih Kosong</td></tr>");
                         unloader();
                     }
                 },
                 "drawCallback": function(settings) {
                     unloader();
-                    warehouse_barcode();
-                    warehouse_data();
-                    warehouse_detail();
-                    delete_warehouse();
+                    penduduk_data();
+                    penduduk_detail();
+                    delete_penduduk();
                 }
             });
         }
 
-        function warehouse_barcode() {
-            $('.btn-print').click(function(e) {
-                barcode_config(e);
-            });
-        }
-
-        function barcode_config(e) {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('Admin/get_barcode_config') ?>",
-                dataType: "JSON",
-                success: function(data) {
-                    config = data
-                    warehouse_barcode_load(e,config)                
-                }
-            });
-
-            return false;
-        }
-
-        function warehouse_barcode_load(e,config) {
-            var html = '<img id="barcode-item" style="width:'+ config.holder_width +'mm; height: '+ config.holder_height +'mm"/>';
-            var id = e.currentTarget.dataset.id;
-            var nama_barang = e.currentTarget.dataset.nama_barang;
-            var barcode = e.currentTarget.dataset.barcode;
-
-            var el = warehousestyletemplate;
-            dom = el.replace('paper_width', config.paper_width);
-            dom = dom.replace('paper_height', config.paper_height);
-            dom = dom.replace('paper_margin', config.margin);
-            dom = dom.replace('paper_padding', config.padding);
-
-            $('#warehouse-barcode-style').html(dom);
-
-            $('#warehouse-barcode').html(html);
-
-            if(config.barcode_text == 1){
-                text = 'GUDANG/'+ barcode;
-            } else {
-                text = 'GUDANG/'+ nama_barang.toUpperCase();
-            }
-
-            JsBarcode("#barcode-item", barcode, {
-                format: config.barcode_format,
-                text: text,
-                width: config.barcode_width,
-                height: config.barcode_height,
-                fontSize: config.barcode_fontsize,
-                background: config.barcode_background,
-                font: config.barcode_font,
-                fontOptions: config.barcode_fontoptions,
-                lineColor: config.barcode_linecolor,
-                textMargin: config.barcode_textmargin,
-                textAlign: config.barcode_textalign,
-                textPosition: config.barcode_textposition,
-                marginLeft: parseInt(config.barcode_marginleft),
-                marginRight: parseInt(config.barcode_marginright),
-                marginTop: parseInt(config.barcode_margintop),
-                marginBottom: parseInt(config.barcode_marginbottom),
-            });
-
-            jQuery('#barcode-item').print();
-
-        }
-
-        function warehouse_data() {
+        function penduduk_data() {
             $('.btn-update').click(function(e) {
-                warehouse_data_load(e);
+                penduduk_data_load(e);
             });
 
             //DATATABLES GLITCH HANDLER
@@ -261,12 +152,12 @@
             // });
         }
 
-        function warehouse_data_load(e) {
+        function penduduk_data_load(e) {
             form_create();
             var id = e.currentTarget.dataset.id;
             $.ajax({
                 type: "POST",
-                url: "<?php echo site_url('Admin/get_warehouse') ?>",
+                url: "<?php echo site_url('Penduduk/get_penduduk') ?>",
                 data: {
                     id: id
                 },
@@ -306,79 +197,6 @@
                 }
             });
             return false;
-        }
-
-        function dropdown_satuan() {
-            $("#id-satuan").select2({
-                theme: 'bootstrap4',
-                placeholder: 'Pilih Satuan',
-                language: {
-                    noResults: function() {
-                        return "Satuan tidak ditemukan !"
-                    },
-                    searching: function() {
-                        return "Mencari Satuan"
-                    },
-                    errorLoading: function() {
-                        return "Satuan tidak ditemukan !"
-                    }
-                },
-                ajax: {
-                    url: base_url + 'Admin/satuan_select2',
-                    type: "post",
-                    dataType: 'json',
-                    delay: 250,
-                    data: function(params) {
-                        return {
-                            searchTerm: params.term
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: data
-                        };
-                    },
-                }
-            });
-            $('b[role="presentation"]').hide();
-        }
-
-        function dynamic_dropdown_satuan(id_satuan, nama_satuan) {
-            html = '<option value="' + id_satuan + '">' + nama_satuan + '</option>';
-            $('#id-satuan').html(html);
-
-            $("#id-satuan").select2({
-                theme: 'bootstrap4',
-                placeholder: 'Pilih Satuan',
-                language: {
-                    noResults: function() {
-                        return "Satuan tidak ditemukan !"
-                    },
-                    searching: function() {
-                        return "Mencari Satuan"
-                    },
-                    errorLoading: function() {
-                        return "Satuan tidak ditemukan !"
-                    }
-                },
-                ajax: {
-                    url: base_url + 'Admin/satuan_select2',
-                    type: "post",
-                    dataType: 'json',
-                    delay: 250,
-                    data: function(params) {
-                        return {
-                            searchTerm: params.term
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: data
-                        };
-                    },
-                }
-            });
-            $('b[role="presentation"]').hide();
         }
 
         function warehouse_detail() {

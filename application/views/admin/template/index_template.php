@@ -1,64 +1,34 @@
 <div class="container-fluid" style="display: none">
-    <div id="style">
-        <style>
-            @media print {
-                @page {
-                    size: 50mm 25mm;
-                    margin: 0;
-                    padding: 0;
-                }
-
-                html,
-                body {
-                    position: relative;
-                    width: 100%;
-                    height: 100%;
-                    max-width: 100%;
-                    max-height: 100%;
-                    margin: 0;
-                    padding: 0;
-                }
-
-                img {
-                    width: 100%;
-                    height: 100%;
-                    max-width: 100%;
-                    max-height: 100%;
-                }
-            }
-        </style>
-    </div>
-    <!-- warehouse LIST -->
-    <div id="warehouse-template">
-        <table class="table warehouse-table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <!-- PENDUDUK LIST -->
+    <div id="penduduk-template">
+        <table class="table penduduk-table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead class="text-white bg-primary">
                 <tr>
                     <th>#</th>
-                    <th>Barang</th>
-                    <th>Harga Beli</th>
-                    <th>Stok</th>
+                    <th>NIK</th>
+                    <th>Nama</th>
                     <th>Opsi</th>
                 </tr>
             </thead>
-            <tbody class="warehouse-tbody">
+            <tbody class="penduduk-tbody">
 
             </tbody>
         </table>
     </div>
 
-    <div id="warehouse-form-template">
-        <div id="hidden-warehouse-form" style="display:none"></div>
+    <div id="penduduk-form-template">
+        <div id="hidden-penduduk-form" style="display:none"></div>
         <div class="form-group">
             <div class="input-group">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
-                        <span>Barang</span>
+                        <span>NIK</span>
                     </div>
                 </div>
-                <input id="nama-barang" type="text" name="nama_barang" class="form-control" required placeholder="Nama Barang">
+                <input id="nik" type="number" name="nik" class="form-control" required placeholder="NIK">
                 <div class="input-group-append">
                     <div class="input-group-text">
-                        <span class="fas fa-paper-plane"></span>
+                        <span class="fas fa-credit-card"></span>
                     </div>
                 </div>
             </div>
@@ -67,15 +37,13 @@
             <div class="input-group">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
-                        <span>Satuan</span>
+                        <span>Nama</span>
                     </div>
                 </div>
-                <select name="id_satuan" id="id-satuan" required class="form-control">
-                    <option value="-1">Pilih Satuan</option>
-                </select>
+                <input id="nama" type="text" name="nama" class="form-control" required placeholder="Nama">
                 <div class="input-group-append">
                     <div class="input-group-text">
-                        <span class="fas fa-cube"></span>
+                        <span class="fas fa-user"></span>
                     </div>
                 </div>
             </div>
@@ -84,111 +52,45 @@
             <div class="input-group">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
-                        <span>Harga Beli</span>
-                    </div>
-                    <div class="input-group-text">
-                        <span>Rp</span>
+                        <span>Alamat</span>
                     </div>
                 </div>
-                <input id="harga-beli" type="number" name="harga_beli" class="form-control" min="0" required value="0" placeholder="Harga Beli">
-            </div>
-        </div>
-        <div class="harga-beli-alert"></div>
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <span>Stok</span>
-                    </div>
-                </div>
-                <input id="stok" type="number" name="stok" class="form-control" min="0" step=".1" required value="0" placeholder="Stok">
+                <textarea name="alamat" id="alamat" class="form-control" cols="1" rows="3" required placeholder="Alamat"></textarea>
                 <div class="input-group-append">
                     <div class="input-group-text">
-                        <span class="fas fa-hourglass-end"></span>
+                        <span class="fas fa-home"></span>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="form-check">
-            <input class="form-check-input" name="isvalid" type="checkbox" value="1" id="isvalid">
-            <label class="form-check-label" for="isvalid">
-                Validasi Data Sekarang
-            </label>
+        <strong>
+            <p>Jenis Kelamin</p>
+        </strong>
+        <div class="form-group">
+            <div class="form-check form-check-inline">
+                <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="jkl" name="jenis_kelamin" required>
+                    <label for="jkl" class="custom-control-label">L</label>
+                </div>
+            </div>
+            <div class="form-check form-check-inline">
+                <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="jkp" name="jenis_kelamin">
+                    <label for="jkp" class="custom-control-label">P</label>
+                </div>
+            </div>
         </div>
-        <div class="stok-alert"></div>
-        <label><strong>Perubahan Stok : </strong><b id="est-stock"></b></label>
-        <br>
-        <label><strong>Estimasi Biaya : </strong><b id="est-buy"></b></label>
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <button type="reset" class="btn form-reset btn-success btn-circle btn-lg"><i class="fas fa-recycle"></i></button>
             <button type="submit" class="btn form-submit btn-primary btn-circle btn-lg"><i class="fas fa-check"></i></button>
         </div>
     </div>
 
-    <div id="warehouse-stok-template">
-        <div id="hidden-warehouse-form" style="display:none"></div>
-        <div class="stock-change">
-            <div class="alert alert-info"><strong>Transaksi Stok</strong></div>
-            <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <span>Harga Beli</span>
-                        </div>
-                        <div class="input-group-text">
-                            <span>Rp</span>
-                        </div>
-                    </div>
-                    <input id="harga-beli" type="number" name="harga_beli" class="form-control" min="0" required value="0" placeholder="Harga Beli">
-                </div>
-            </div>
-            <div class="harga-beli-alert"></div>
-            <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <span>Stok</span>
-                        </div>
-                    </div>
-                    <input id="stok" type="number" name="stok" class="form-control" min="0" step=".1" required value="0" placeholder="Stok">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-hourglass-end"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" name="isvalid" type="checkbox" value="1" id="isvalid">
-                <label class="form-check-label" for="isvalid">
-                    Validasi Data Sekarang
-                </label>
-            </div>
-            <div class="stok-alert"></div>
-            <label><strong>Perubahan Stok : </strong><b id="est-stock"></b></label>
-            <br>
-            <label><strong>Estimasi Biaya : </strong><b id="est-buy"></b></label>
-        </div>
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <button type="reset" class="btn form-reset btn-success btn-circle btn-lg"><i class="fas fa-recycle"></i></button>
-            <button type="button" class="btn form-close btn-remove btn-danger btn-circle btn-lg"><i class="fas fa-times"></i></button>
-            <button type="submit" class="btn form-submit btn-primary btn-circle btn-lg"><i class="fas fa-check"></i></button>
-        </div>
-    </div>
-
-    <div id="warehouse-detail-template">
+    <div id="penduduk-detail-template">
         <div id="warehouse-toolbar" class="d-sm-flex align-items-center justify-content-between mb-4 py-3">
             <a href="#" class="btn btn-update btn-success btn-icon-split btn-sm" data-id="@id">
                 <span class="icon text-white-50"><i class="fas fa-cog"></i></span>
                 <span class="text">Update</span>
-            </a>
-            <a href="#" class="btn btn-stok btn-warning btn-icon-split btn-sm" data-id="@id">
-                <span class="icon text-white-50"><i class="fas fa-briefcase"></i></span>
-                <span class="text">Stok Opname</span>
-            </a>
-            <a href="#" class="btn btn-barcode btn-info btn-icon-split btn-sm" data-id="@id">
-                <span class="icon text-white-50"><i class="fas fa-barcode"></i></span>
-                <span class="text">Cetak Barcode</span>
             </a>
             <a href="#" class="btn btn-delete btn-danger btn-icon-split btn-sm" data-id="@id">
                 <span class="icon text-white-50"><i class="fas fa-cog"></i></span>
@@ -237,48 +139,9 @@
                 </tbody>
             </table>
         </div>
-        <div class="card shadow mb-4 overflow-hidden border-2 border-blue-500 border-opacity-25 sm:rounded-lg">
-            <!-- Card Header - Dropdown -->
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Riwayat Stok Opname</h6>
-            </div>
-            <!-- Card Body -->
-            <div class="card-body">
-                <div id="warehouse-stokopname-list" class="table-responsive"></div>
-            </div>
-        </div>
-        <div class="card shadow mb-4 overflow-hidden border-2 border-blue-500 border-opacity-25 sm:rounded-lg">
-            <!-- Card Header - Dropdown -->
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Riwayat Harga Beli</h6>
-            </div>
-            <!-- Card Body -->
-            <div class="card-body">
-                <div class="chart-area">
-                    <canvas id="chart-harga"></canvas>
-                </div>
-            </div>
-        </div>
     </div>
 
-    <div id="warehouse-stokopname-template">
-        <table class="table warehouse-stokopname-table table-bordered" id="dataTable" width="100%" cellspacing="0">
-            <thead class="text-white bg-primary">
-                <tr>
-                    <th>#</th>
-                    <th>Waktu</th>
-                    <th>Harga Beli</th>
-                    <th>Stok</th>
-                    <th>Validasi</th>
-                </tr>
-            </thead>
-            <tbody class="warehouse-stokopname-tbody">
-
-            </tbody>
-        </table>
-    </div>
-
-    <div id="warehouse-delete-template">
+    <div id="penduduk-delete-template">
         <center>
             <blockquote>
                 <h3><em><strong>Peringatan!</strong> Apakah anda yakin ingin menghapus data?</em></h3>

@@ -52,7 +52,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database', 'session','encryption','cart',"Escpos",'Phpspreadsheet',"Simple_login");
+$autoload['libraries'] = array('database');
 
 
 /*
@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('Admin_model','Login_model','kasir_model');
+$autoload['model'] = array('Penduduk_model');
 
 
 /* End of file autoload.php */

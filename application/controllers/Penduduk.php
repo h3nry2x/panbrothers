@@ -38,7 +38,7 @@ class Penduduk extends CI_Controller
 		$no = 1;
 		foreach ($query->result() as $rows) {
 			$detail = '<a href="#" class="btn btn-detail btn-primary btn-sm" data-id="' . $rows->id . '"><i class="fas fa-file"></i></a>';
-			$update = '<a href="#" class="btn btn-update btn-success btn-sm" data-id="' . $rows->id . '"><i class="fas fa-cog"></i></a>';
+			$update = '<a href="#" class="btn btn-update btn-success btn-sm" data-id="' . $rows->id . '"><i class="fas fa-edit"></i></a>';
 			$del = '<a href="#" class="btn btn-delete btn-danger btn-sm" data-id="' . $rows->id . '"><i class="fas fa-trash"></i></a>';
 
 			$nama = ucwords($rows->nama);
@@ -88,7 +88,7 @@ class Penduduk extends CI_Controller
 
 		if (!$id) {
 			$data['nik'] = $this->input->post('nik');
-			$data['nama'] = $this->input->pots('nama');
+			$data['nama'] = $this->input->post('nama');
 			$data['jenis_kelamin'] = $this->input->post('jenis_kelamin');
 			$data['alamat'] = $this->input->post('alamat');
 
@@ -103,7 +103,7 @@ class Penduduk extends CI_Controller
 		} else if ($id) {
 
 			$data['nik'] = $this->input->post('nik');
-			$data['nama'] = $this->input->pots('nama');
+			$data['nama'] = $this->input->post('nama');
 			$data['jenis_kelamin'] = $this->input->post('jenis_kelamin');
 			$data['alamat'] = $this->input->post('alamat');
 
@@ -111,7 +111,7 @@ class Penduduk extends CI_Controller
 			$data['id'] = $id;
 			$data['tanggalupdate'] = date('Y-m-d H:i:s');
 			$data['userupdate'] = 'Admin';
-			$this->Admin_model->update_penduduk($data);
+			$this->Penduduk_model->update_penduduk($data);
 
 			// RESPONSES
 			$result['success'] = 2;
@@ -145,7 +145,7 @@ class Penduduk extends CI_Controller
 	{
 		$id = $this->input->post('id');
 
-		$this->Admin_model->delete_penduduk($id);
+		$this->Penduduk_model->delete_penduduk($id);
 
 		// RESPONSES
 		$result['success'] = 1;

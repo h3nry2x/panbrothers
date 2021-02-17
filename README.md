@@ -12,7 +12,7 @@
 ## Installation
 * Clone Repository pada directory root anda
 * Import database pada directory "./database/development" menggunakan tool phpmyadmin atau sejenisnya
-* Jalankan pada web browser anda dengan url "http://localhost/<repository>
+* Jalankan pada web browser anda dengan url "http://localhost/{repository}
 ## Feature
 * Datatables Server Side Rendering
 * Create Data AJAX POST
